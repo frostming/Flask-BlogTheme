@@ -1,0 +1,9 @@
+name: blueprint
+
+blist:
+  - 3
+  - 4
+
+bnested:
+  C: c
+  D: d

@@ -1,0 +1,9 @@
+name: main
+
+alist:
+  - 1
+  - 2
+
+anested:
+  A: a
+  B: b
