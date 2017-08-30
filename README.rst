@@ -32,13 +32,15 @@ Usage
 Put a ``_config.yml`` under main app directory as well as blueprint root, like below::
 
     myproject
-     ├─blueprint
+     ├─blueprints
      │    ├─__init__.py
      │    └─_config.yml
      ├─app.py
      └─_config.yml
 
-Then, in you ``app.py``::
+Then, in you ``app.py``
+
+.. code-block:: python
 
     from flask-ymlconf import YmlConf
     from flask import Flask
