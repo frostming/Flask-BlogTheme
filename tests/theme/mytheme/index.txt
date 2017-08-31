@@ -1,0 +1,1 @@
+{{url_for('theme.static', filename='plain.txt')}}

@@ -1,12 +1,17 @@
-Flask-YmlConf
-=============
+Flask-BlogTheme
+===============
 
-.. image:: https://travis-ci.org/frostming/Flask-YmlConf.svg?branch=master
-    :target: https://travis-ci.org/frostming/Flask-YmlConf
+.. image:: https://travis-ci.org/frostming/Flask-BlogTheme.svg?branch=master
+    :target: https://travis-ci.org/frostming/Flask-BlogTheme
 
-*Flask extension to read _config.yml files like Jekyll*
+*Flask extension to switch blog theme easily*
 
-When we are using static blogging framework such as Jekyll and Hexo, we benefit from brief syntax and elegant looking of YAML config files.
+Features
+~~~~~~~~
+
+* Clone theme repository to theme folder and set name in config file
+* YAML ``_config.yml`` files like Jekyll
+* Easily porting theme from Jekyll or Hexo
 
 Installation
 ~~~~~~~~~~~~
@@ -15,7 +20,7 @@ From PyPI
 ^^^^^^^^^
 ::
 
-    $ pip install Flask-YmlConf
+    $ pip install Flask-BlogTheme
 
 All are ready for you, prefix the command with ``sudo`` if necessary.
 
@@ -23,52 +28,42 @@ From GitHub
 ^^^^^^^^^^^
 ::
 
-    $ git clone git@github.com:frostming/Flask-YmlConf.git
-    $ cd Flask-YmlConf
+    $ git clone git@github.com:frostming/Flask-BlogTheme.git
+    $ cd Flask-BlogTheme
     $ python setup.py develop
 
 Usage
 ~~~~~
-Put a ``_config.yml`` under main app directory as well as blueprint root, like below::
-
-    myproject
-     ├─blueprints
-     │    ├─__init__.py
-     │    └─_config.yml
-     ├─app.py
-     └─_config.yml
-
-Then, in you ``app.py``
 
 .. code-block:: python
 
-    from flask-ymlconf import YmlConf
-    from flask import Flask
-    from blueprints import sub
+from Flask-BlogTheme import BlogTheme
+from flask import Flask
 
-    app = Flask(__name__)
-    conf = YmlConf(app)
-    # Alternatively, you can instantiate with YmlConf() and call conf.init_app() later in your app factory function.
+app = Flask(__name__)
+BlogTheme(app)
 
-    # Register any blueprint after Flask-YmlConf is initialized
-    app.register_blueprint(sub, url_prefix='/sub/')
+Create a ``theme`` folder under your app root, clone some theme repository to it. You can pass an extra ``theme_folder`` parameter to ``BlogTheme()`` to change the default folder.
 
-An extra attribute ``app.site`` is available for the app config. The name is taken from Jekyll config conventions, you can change it by ``app.config['YML_CONF_NAME']``.
+Config the theme just as the guide tells, in ``_config.yml``. The theme repository should obey following restrictions:
 
-``{{site}}`` is also added as app context processor and is accessible in templates., ``{{blueprint}}`` is added as context processor for each blueprint. The processor names are also customizable.
+* static files under ``assets`` folder
+* All layout / templates directly under the theme folder
+* Templates are in jinja2-readable format
+
+Set ``app.config['BLOG_THEME_NAME']`` to the theme name. Then, in you ``app.py``:
+Then ``{{theme}}`` is accessible throughout your app. You can put some settings in the ``_config.yml`` under app root path to override the theme config.
 
 Config
 ~~~~~~
 
-============================  =========================================================================
+======================  ===========================================================
 Config                        Description
-============================  =========================================================================
-YML_CONF_NAME                 the file name of the config, defaults to ``_config.yml``
-YML_CONF_PROCESSOR            the context processor for the config, defaults to ``site``
-YML_CONF_BLUEPRINT_PROCESSOR  the context processor for the blueprint config, defaults to ``blueprint``
-============================  =========================================================================
-
-In addition, you can pass ``name``, ``processor``, ``blueprint_processor`` to ``YmlConf()`` to override corresponding config values.
+======================  ===========================================================
+BLOG_THEME_NAME         The theme name
+BLOG_THEME_PROCESSOR    the context processor for the config, defaults to ``theme``
+BLOG_THEME_CONFIG_NAME  the config file name, defaults to ``_config.yml``
+======================  ===========================================================
 
 License
 ~~~~~~~

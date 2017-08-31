@@ -1,17 +1,17 @@
 from setuptools import setup
 import re
 
-with open('flask_ymlconf.py', 'r') as f:
+with open('flask_blogtheme.py', 'r') as f:
     version = re.search(r'__version__\s*=\s*[\'"](.+)[\'"]', f.read()).group(1)
 
 setup(
-    name='Flask-YmlConf',
+    name='Flask-BlogTheme',
     version=version,
-    description='Flask extension to read _config.yml files like Jekyll',
+    description='Flask extension to read switch theme easily',
     author='Frost Ming',
     author_email='mianghong@gmail.com',
-    url='https://github.com/frostming/Flask-YmlConf',
-    module=['flask_ymlconf'],
+    url='https://github.com/frostming/Flask-BlogTheme',
+    module=['flask_blogtheme'],
     install_requires=['pyyaml'],
     license='MIT',
     classifiers=[
