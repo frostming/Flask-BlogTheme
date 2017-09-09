@@ -13,7 +13,7 @@ import os.path as op
 
 from flask import Blueprint
 
-__version__ = '0.2.0'
+__version__ = '0.2.1'
 __all__ = ['BlogTheme']
 
 
@@ -44,9 +44,10 @@ class BlogTheme(object):
         template_folder = app.config['BLOG_THEME_NAME']
         static_folder = op.join(template_folder, 'assets')
         # Create a blueprint to handle themes
-        theme = Blueprint('theme', self.theme_folder,
+        theme = Blueprint('theme', __name__,
                           template_folder=template_folder,
-                          static_folder=static_folder)
+                          static_folder=static_folder,
+                          root_path=op.join(app.root_path, self.theme_folder))
         app_config = self._get_config(app.root_path)
         theme_config = self._get_config(op.join(theme.root_path,
                                                 theme.template_folder))
